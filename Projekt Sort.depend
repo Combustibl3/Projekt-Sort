@@ -1,0 +1,30 @@
+# depslib dependency file v1.0
+1515594790 source:d:\florian elten\documents\daten_florian\studium tuhh\proz.prog\codeblocks\projekt sort\functions.c
+	"functions.h"
+
+1515594980 source:d:\florian elten\documents\daten_florian\studium tuhh\proz.prog\codeblocks\projekt sort\sort.c
+	"sort.h"
+	"functions.h"
+
+1515595466 source:d:\florian elten\documents\daten_florian\studium tuhh\proz.prog\codeblocks\projekt sort\main.c
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdint.h>
+	<time.h>
+	"sort.h"
+	"functions.h"
+
+1515520371 d:\florian elten\documents\daten_florian\studium tuhh\proz.prog\codeblocks\projekt sort\sort.h
+	<stdio.h>
+	<stdlib.h>
+	<stdint.h>
+	<time.h>
+
+1515594790 d:\florian elten\documents\daten_florian\studium tuhh\proz.prog\codeblocks\projekt sort\functions.h
+	<stdio.h>
+	<stdlib.h>
+	<stdint.h>
+	<time.h>
+
