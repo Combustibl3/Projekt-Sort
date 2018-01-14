@@ -80,6 +80,8 @@ int main() {
     uint32_t min = 1;
     uint16_t BubSwitch = 0, InsSwitch = 0, SelSwitch = 0, MerSwitch = 0, QuiSwitch = 0, HeaSwitch = 0, SheSwitch = 0, CocSwitch = 0, RadSwitch = 0;    //Switches für Vergleich
     uint16_t SortsCount = 0;
+    uint16_t stocked = 0;           //Probe ob das Array bestückt ist
+    uint16_t sorted = 0;            //Probe ob das Array sortiert ist
     struct infos Sorts[9];
 
     strcpy(Sorts[0].name, "Bubblesort");
@@ -105,6 +107,8 @@ int main() {
             scanf("%u", &arraysize);
             sortedarray = (uint32_t*) malloc(arraysize * sizeof(uint32_t));
             unsortedarray = (uint32_t*) malloc(arraysize * sizeof(uint32_t));
+            stocked = 0;
+            sorted = 0;
             CLEAR;
             printf("--Die Anzahl der Elemente betraegt nun: %u", arraysize);
         }
@@ -172,6 +176,8 @@ int main() {
                         printf("--Beachten sie die Einschraenkung der Groesse!\n");
                     }
                 }
+                stocked = 1;
+                sorted = 0;
                 CLEAR;
                 printf("--Sie haben alle Elemente eingegeben.");
             }
@@ -193,6 +199,8 @@ int main() {
                     sortedarray[j] = unsortedarray[j] = (random % (max - min + 1)) + min;
                     printf("%u. Element: %u\n", j+1, sortedarray[j]);
                 }
+                stocked = 1;
+                sorted = 0;
             }
             else{
                 printf("--Legen sie vorerst die Array - Groesse fest!");
@@ -205,14 +213,19 @@ int main() {
             CLEAR;
             inputArr = 0;
             if(arraysize != 0){
-                if(unsortedarray[0] >= min && unsortedarray[0] <= max){
+                if(stocked == 1){
                     while(inputArr != 3){
                         IARRAY();
                         scanf("%hu", &inputArr);
                         if(inputArr == 1){
                             CLEAR;
-                            for(uint16_t j = 0; j < arraysize; j++){
-                                printf("%u. Element: %u\n", j+1, sortedarray[j]);
+                            if(sorted == 1){
+                                for(uint16_t j = 0; j < arraysize; j++){
+                                    printf("%u. Element: %u\n", j+1, sortedarray[j]);
+                                }
+                            }
+                            else{
+                                printf("Ihr Array wurde noch nicht sortiert!");
                             }
                         }
                         else if(inputArr == 2){
@@ -242,7 +255,7 @@ int main() {
             CLEAR;
             inputSorts = 0;
             if(arraysize != 0){
-                if(unsortedarray[0] >= min && unsortedarray[0] <= max){
+                if(stocked == 1){
                     while(inputSorts != 10){
                         ISORTS();
                         scanf("%hu", &inputSorts);
@@ -256,6 +269,7 @@ int main() {
                             comparisons = BubbleSort(sortedarray, arraysize);
                             GetSystemTime(&later);
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
+                            sorted = 1;
                             for(uint32_t j = 0; j < arraysize; j++){
                                 printf("%u. %u\n", j+1, sortedarray[j]);
                             }
@@ -273,6 +287,7 @@ int main() {
                             comparisons = InsertionSort(sortedarray, arraysize);
                             GetSystemTime(&later);
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
+                            sorted = 1;
                             for(uint32_t j = 0; j < arraysize; j++){
                                 printf("%u. %u\n", j+1, sortedarray[j]);
                             }
@@ -290,6 +305,7 @@ int main() {
                             comparisons = SelectionSort(sortedarray, arraysize);
                             GetSystemTime(&later);
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
+                            sorted = 1;
                             for(uint32_t j = 0; j < arraysize; j++){
                                 printf("%u. %u\n", j+1, sortedarray[j]);
                             }
@@ -307,6 +323,7 @@ int main() {
                             comparisons = MergeSort(sortedarray, arraysize);
                             GetSystemTime(&later);
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
+                            sorted = 1;
                             for(uint32_t j = 0; j < arraysize; j++){
                                 printf("%u. %u\n", j+1, sortedarray[j]);
                             }
@@ -324,6 +341,7 @@ int main() {
                             //comparisons = QuickSort(sortedarray, arraysize);
                             GetSystemTime(&later);
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
+                            sorted = 1;
                             for(uint32_t j = 0; j < arraysize; j++){
                                 printf("%u. %u\n", j+1, sortedarray[j]);
                             }
@@ -341,6 +359,7 @@ int main() {
                             //comparisons = HeapSort(sortedarray, arraysize);
                             GetSystemTime(&later);
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
+                            sorted = 1;
                             for(uint32_t j = 0; j < arraysize; j++){
                                 printf("%u. %u\n", j+1, sortedarray[j]);
                             }
@@ -358,6 +377,7 @@ int main() {
                             //comparisons = ShellSort(sortedarray, arraysize);
                             GetSystemTime(&later);
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
+                            sorted = 1;
                             for(uint32_t j = 0; j < arraysize; j++){
                                 printf("%u. %u\n", j+1, sortedarray[j]);
                             }
@@ -375,6 +395,7 @@ int main() {
                             //comparisons = CocktailSort(sortedarray, arraysize);
                             GetSystemTime(&later);
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
+                            sorted = 1;
                             for(uint32_t j = 0; j < arraysize; j++){
                                 printf("%u. %u\n", j+1, sortedarray[j]);
                             }
@@ -392,6 +413,7 @@ int main() {
                             //comparisons = RadixSort(sortedarray, arraysize);
                             GetSystemTime(&later);
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
+                            sorted = 1;
                             for(uint32_t j = 0; j < arraysize; j++){
                                 printf("%u. %u\n", j+1, sortedarray[j]);
                             }
@@ -422,7 +444,7 @@ int main() {
             inputComp = 0;
             SortsCount = 0;
             if(arraysize != 0){
-                if(unsortedarray[0] >= min && unsortedarray[0] <= max){
+                if(stocked == 1){
                     while(inputComp != 6){
                         printf("Derzeit aktivierte Sorts: ");
                         if(BubSwitch == 1){
@@ -480,6 +502,7 @@ int main() {
                                     Sorts[SortsCount].time = (uint32_t) ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                                     strcpy(Sorts[SortsCount].name, "Bubblesort");
                                     SortsCount++;
+                                    sorted = 1;
                                 }
                                 if(InsSwitch == 1){
                                     for(uint32_t n = 0; n < arraysize; n++){
@@ -491,6 +514,7 @@ int main() {
                                     Sorts[SortsCount].time = (uint32_t) ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                                     strcpy(Sorts[SortsCount].name, "Insertionsort");
                                     SortsCount++;
+                                    sorted = 1;
                                 }
                                 if(SelSwitch == 1){
                                     for(uint32_t n = 0; n < arraysize; n++){
@@ -502,6 +526,7 @@ int main() {
                                     Sorts[SortsCount].time = (uint32_t) ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                                     strcpy(Sorts[SortsCount].name, "Selectionsort");
                                     SortsCount++;
+                                    sorted = 1;
                                 }
                                 if(MerSwitch == 1){
                                     for(uint32_t n = 0; n < arraysize; n++){
@@ -513,6 +538,7 @@ int main() {
                                     Sorts[SortsCount].time = (uint32_t) ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                                     strcpy(Sorts[SortsCount].name, "Mergesort");
                                     SortsCount++;
+                                    sorted = 1;
                                 }
                                 if(QuiSwitch == 1){
                                     for(uint32_t n = 0; n < arraysize; n++){
@@ -524,6 +550,7 @@ int main() {
                                     Sorts[SortsCount].time = (uint32_t) ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                                     strcpy(Sorts[SortsCount].name, "Quicksort");
                                     SortsCount++;
+                                    sorted = 1;
                                 }
                                 if(HeaSwitch == 1){
                                     for(uint32_t n = 0; n < arraysize; n++){
@@ -535,6 +562,7 @@ int main() {
                                     Sorts[SortsCount].time = (uint32_t) ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                                     strcpy(Sorts[SortsCount].name, "Heapsort");
                                     SortsCount++;
+                                    sorted = 1;
                                 }
                                 if(SheSwitch == 1){
                                     for(uint32_t n = 0; n < arraysize; n++){
@@ -546,6 +574,7 @@ int main() {
                                     Sorts[SortsCount].time = (uint32_t) ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                                     strcpy(Sorts[SortsCount].name, "Shellsort");
                                     SortsCount++;
+                                    sorted = 1;
                                 }
                                 if(CocSwitch == 1){
                                     for(uint32_t n = 0; n < arraysize; n++){
@@ -557,6 +586,7 @@ int main() {
                                     Sorts[SortsCount].time = (uint32_t) ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                                     strcpy(Sorts[SortsCount].name, "Cocktailsort");
                                     SortsCount++;
+                                    sorted = 1;
                                 }
                                 if(RadSwitch == 1){
                                     for(uint32_t n = 0; n < arraysize; n++){
@@ -568,6 +598,7 @@ int main() {
                                     Sorts[SortsCount].time = (uint32_t) ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                                     strcpy(Sorts[SortsCount].name, "Radixsort");
                                     SortsCount++;
+                                    sorted = 1;
                                 }
                                 while(inputList != 4){
                                     CLEAR;
