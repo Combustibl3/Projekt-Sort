@@ -4,8 +4,8 @@
 #include <string.h>
 #include <stdint.h>
 #include <time.h>
-#include "sort.h"
-#include "functions.h"
+#include "sort.h"                   //Einbindung der Sortieralgorithmen
+#include "functions.h"              //Einbindung zusätzlicher Funktionen
 
 #define IMAIN UserinterfaceMain
 #define IRANGE UserinterfaceRange
@@ -13,8 +13,8 @@
 #define IARRAY UserinterfaceArrayOut
 #define ICOMP UserinterfaceComparison
 #define ILIST UserinterfaceList
-#define CLEAR system("cls")
-
+#define CLEAR system("cls")         //system("cls") dient dazu das normale Windows Terminal zu clearen (Bei Unix Systemen oder anderen Terminals funktioniert
+                                    //dies eventuell nicht oder nicht einwandfrei
 struct infos{
 char name[50];
 uint32_t time;
@@ -31,19 +31,19 @@ void swapstruct(struct infos * A, struct infos * B){            //eventuell Ausl
     *B = Aold;
 }
 
-void IMAIN(){
+void IMAIN(){       //Hauptmenue. IRANGE, ISORTS, ICOMP und IARRAY sind hierüber zugänglich.
     printf       ("\n1) Array - Groesse festlegen          2) Zahlenbereich waehlen\n"
                     "3) Zahlen von Tastatur einlesen       4) Zufallszahlen erzeugen\n"
                     "5) Array ausgeben                     6) Array sortieren mit...\n"
                     "7) Vergleich mehrerer Sorts           8) Programm beenden\n");
 }
 
-void IRANGE(){
+void IRANGE(){      //Untermenue. Zum Festlegen der Grenzwerte der Werte.
     printf      ("\n1) Minimum festlegen         2) Maximum festlegen\n"
                    "3) Untermenue verlassen\n");
 }
 
-void ISORTS(){
+void ISORTS(){      //Untermenue. Zum einzelnen Sortieren mit Sorts.
     printf      ("\n1) Bubblesort          2) Insertionsort\n"
                    "3) Selectionsort       4) Mergesort\n"
                    "5) Quicksort           6) Heapsort\n"
@@ -51,18 +51,18 @@ void ISORTS(){
                    "9) Radixsort           10) Untermenue verlassen\n");
 }
 
-void IARRAY(){
+void IARRAY(){      //Untermenue. Zum Ausgeben des Arrays (sortiert oder unsortiert).
     printf      ("\n1) sortiertes Array          2) unsortiertes Array\n"
                    "3) Untermenue verlassen\n");
 }
 
-void ICOMP(){
+void ICOMP(){       //Untermenue. Zum Vergleich mehrerer Sorts. ILIST ist hierüber zugänglich.
     printf      ("\n1) alle aktivieren         2) alle deaktivieren\n"
                    "3) Vergleich starten       4) Sort hinzufuegen\n"
                    "5) Sort entfernen          6) Untermenue verlassen\n");
 }
 
-void ILIST(){
+void ILIST(){       //Untermenue von ICOMP. Zum Sortieren der Vergleichsergebnisse.
     printf      ("\n1) Liste nach Alphabet sortieren               2) Liste nach Zeit sortieren\n"
                    "3) Liste nach Vergleichen sortieren            4) Untermenue verlassen\n");
 }
@@ -71,28 +71,20 @@ void ILIST(){
 
 int main() {
 
+
     SYSTEMTIME before;          //Zeitmarke vor der jeweiligen Funktion
     SYSTEMTIME later;           //Zeitmarke nach der jeweiligen Funktion
     int64_t diffms;             //Differenz beider Zeitmarken umgerechnet in ms
-    uint64_t comparisons = 0;   //Anzahl der Vergleiche eines Sorts (Ausgangswert jedes Sorts)
-    uint16_t input = 0, inputArr = 0, inputSorts = 0, inputRan = 0, inputComp = 0, inputList = 0, inputArrSwi = 0;              //Eingabe des Nutzers für Optionenwahl
-    uint32_t max = 1000;        //MAX und MIN Werte für den Zahlenbereich
-    uint32_t min = 1;
+    uint64_t comparisons = 0;   //Anzahl der Vergleiche eines Sorts (Ausgangswert jeder Sortfunktion)
+    uint16_t input = 0, inputArr = 0, inputSorts = 0, inputRan = 0, inputComp = 0, inputList = 0, inputArrSwi = 0;      //Eingabe des Nutzers für Optionenwahl in verschiedenen Menüs
+    uint32_t max = 1000;        //MAXIMAL Wert für den Zahlenbereich
+    uint32_t min = 1;           //MINIMAL Wert für den Zahlenbereich
     uint16_t BubSwitch = 0, InsSwitch = 0, SelSwitch = 0, MerSwitch = 0, QuiSwitch = 0, HeaSwitch = 0, SheSwitch = 0, CocSwitch = 0, RadSwitch = 0;    //Switches für Vergleich
-    uint16_t SortsCount = 0;
-    uint16_t stocked = 0;           //Probe ob das Array bestückt ist
-    uint16_t sorted = 0;            //Probe ob das Array sortiert ist
-    struct infos Sorts[9];
+    uint16_t SortsCount = 0;    //Zählt wie viele Sorts beim Vergleich aktiviert wurden
+    uint16_t stocked = 0;       //Probe ob das Array bestückt ist
+    uint16_t sorted = 0;        //Probe ob das Array sortiert ist
+    struct infos Sorts[9];      //speichert Ergebnisse des Vergleichs
 
-    strcpy(Sorts[0].name, "Bubblesort");
-    strcpy(Sorts[1].name, "Insertionsort");
-    strcpy(Sorts[2].name, "Selectionsort");
-    strcpy(Sorts[3].name, "Mergesort");
-    strcpy(Sorts[4].name, "Quicksort");
-    strcpy(Sorts[5].name, "Heapsort");
-    strcpy(Sorts[6].name, "Shellsort");
-    strcpy(Sorts[7].name, "Cocktailsort");
-    strcpy(Sorts[8].name, "Radixsort");
 
     while(input != 8){
 
@@ -107,9 +99,9 @@ int main() {
             CLEAR;
             printf("Geben sie die Anzahl der Elemente an, die sortiert werden sollen.\n");
             scanf("%u", &arraysize);
-            sortedarray = (uint32_t*) malloc(arraysize * sizeof(uint32_t));
-            unsortedarray = (uint32_t*) malloc(arraysize * sizeof(uint32_t));
-            stocked = 0;
+            sortedarray = (uint32_t*) malloc(arraysize * sizeof(uint32_t));     //es wird Speicher für zwei Arrays reserviert
+            unsortedarray = (uint32_t*) malloc(arraysize * sizeof(uint32_t));   //"unsortedarray" wird nicht an Funktionen übergeben, "unsortedarray" dient dazu die ursprünglichen Werte zu speichern und
+            stocked = 0;                                                        //diese "sortedarray" vor einem Sort zu übergeben
             sorted = 0;
             CLEAR;
             printf("--Die Anzahl der Elemente betraegt nun: %u", arraysize);
@@ -118,8 +110,8 @@ int main() {
 
         /////////////////////////////////////////Zahlenbereich waehlen
         else if(input == 2){
-            uint32_t mintest;
-            uint32_t maxtest;
+            uint32_t mintest;       //mintest dient dazu zu prüfen, ob das Minimum kleiner als das Maximum gewählt wurde
+            uint32_t maxtest;       //maxtest dient dazu zu prüfen, ob das Maximum größer als das Minimum gewählt wurde
             CLEAR;
             inputRan = 0;
             while(inputRan != 3){
@@ -127,12 +119,12 @@ int main() {
                 IRANGE();
                 inputRan = 0;
                 scanf("%hu", &inputRan);
-                getchar();                      //getchar verhindert, dass Programm sich aufhängt, wenn eine Zeichenkette (bzw. Buchstaben eingegeben werden)
+                getchar();
                 if(inputRan == 1){
                     CLEAR;
                     printf("Geben sie ihr gewuenschtes Minimum ein:");
                     scanf("%u", &mintest);
-                    if(mintest <= max){
+                    if(mintest <= max){     //Minimum muss kleiner gleich Maximum gewählt werden
                         min = mintest;
                         CLEAR;
                     }
@@ -145,7 +137,7 @@ int main() {
                     CLEAR;
                     printf("Geben sie ihr gewuenschtes Maximum ein:");
                     scanf("%u", &maxtest);
-                    if(maxtest >= min){
+                    if(maxtest >= min){     //Maximum muss größer gleich Minimum gewählt werden
                         max = maxtest;
                         CLEAR;
                     }
@@ -171,8 +163,8 @@ int main() {
                 while (i <= arraysize) {
                     printf("%u. Element: ", i);
                     scanf("%u", &value);
-                    if(value >= min && value <= max) {
-                        sortedarray[i - 1] = unsortedarray[i - 1] = value;
+                    if(value >= min && value <= max) {                      //Nutzer gibt manuell alle Werte des Arrays ein
+                        sortedarray[i - 1] = unsortedarray[i - 1] = value;  //Werte werden auf gültigkeit überprüft
                         i++;
                     }
                     else{
@@ -197,10 +189,10 @@ int main() {
             CLEAR;
             if(arraysize != 0) {
                 uint32_t random;
-                srand((uint32_t) time(NULL));                                    //Zeit wird benutzt um Zufälligkeit zu gewährleisten
+                srand((uint32_t) time(NULL));                 //Zeit wird genutzt, um Zufälligkeit zu gewährleisten
                 for (uint32_t j = 0; j < arraysize; j++) {
                     random = (uint32_t) rand();
-                    sortedarray[j] = unsortedarray[j] = (random % (max - min + 1)) + min;
+                    sortedarray[j] = unsortedarray[j] = (random % (max - min + 1)) + min;   //Zufallszahlen werden im Bereich des festgelegten Zahlenbereichs generiert
                     printf("%u. Element: %u\n", j+1, sortedarray[j]);
                 }
                 stocked = 1;
@@ -222,10 +214,10 @@ int main() {
                         IARRAY();
                         inputArr = 0;
                         scanf("%hu", &inputArr);
-                        getchar();                  //getchar verhindert, dass Programm sich aufhängt, wenn eine Zeichenkette (bzw. Buchstaben eingegeben werden)
+                        getchar();
                         if(inputArr == 1){
                             CLEAR;
-                            if(sorted == 1){
+                            if(sorted == 1){        //sortedarray wird lediglich ausgegeben, wenn es schon sortiert wurde
                                 for(uint16_t j = 0; j < arraysize; j++){
                                     printf("%u. Element: %u\n", j+1, sortedarray[j]);
                                 }
@@ -240,9 +232,9 @@ int main() {
                                 printf("%u. Element: %u\n", j+1, unsortedarray[j]);
                             }
                         }
-                    else{
-                        CLEAR;
-                    }
+                        else{
+                            CLEAR;
+                        }
                     }
                     CLEAR;
                 }
@@ -265,25 +257,25 @@ int main() {
                     while(inputSorts != 10){
                         ISORTS();
                         inputSorts = 0;
-                        scanf("%hu", &inputSorts);
-                        getchar();       //getchar verhindert, dass Programm sich aufhängt, wenn eine Zeichenkette (bzw. Buchstaben eingegeben werden)
+                        scanf("%hu", &inputSorts);  //Nutzer kann manuell wählen, welchen Sort er benutzen will
+                        getchar();
 
                         if(inputSorts == 1){    //Bubblesort
                             CLEAR;
-                            for(uint32_t n = 0; n < arraysize; n++){
+                            for(uint32_t n = 0; n < arraysize; n++){    //Werte von "unsortedarray" werden auf "sortarray" übertragen
                                 sortedarray[n] = unsortedarray[n];
                             }
-                            GetSystemTime(&before);
+                            GetSystemTime(&before);         //Zeit vor Start des Sorts wird gespeichert
                             comparisons = BubbleSort(sortedarray, arraysize);
-                            GetSystemTime(&later);
+                            GetSystemTime(&later);          //Zeit nach Ende des Sorts wird gespeichert und Differenz wird gebildet
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                             sorted = 1;
-                            for(uint32_t j = 0; j < arraysize; j++){
+                            for(uint32_t j = 0; j < arraysize; j++){            //Ausgaben werden im Laufe der weiteren Entwicklung entfernt!
                                 printf("%u. %u\n", j+1, sortedarray[j]);
                             }
                             printf("\nArray durch Bubblesort sortiert.\n");
-                            printf("Benoetigte Vergleiche:  %llu\n", comparisons);
-                            printf("Benoetigte Zeit:        %lldms\n", diffms);
+                            printf("Benoetigte Vergleiche:  %llu\n", comparisons);     //Benötigte Vergleichtsschritte werden ausgegeben
+                            printf("Benoetigte Zeit:        %lldms\n", diffms);        //Benötigte Zeit wird ausgegeben
                         }
 
                         else if(inputSorts == 2){    //Insertionsort
@@ -454,7 +446,7 @@ int main() {
             if(arraysize != 0){
                 if(stocked == 1){
                     while(inputComp != 6){
-                        printf("Derzeit aktivierte Sorts: ");
+                        printf("Derzeit aktivierte Sorts: ");   //Switches entweder 1 (ein) oder 0 (aus)
                         if(BubSwitch == 1){
                             printf("Bubble | ");
                         }
@@ -485,7 +477,7 @@ int main() {
                         ICOMP();
                         inputComp = 0;
                         scanf("%hu", &inputComp);
-                        getchar();              //getchar verhindert, dass Programm sich aufhängt, wenn eine Zeichenkette (bzw. Buchstaben eingegeben werden)
+                        getchar();
                         if(inputComp == 1){
                             CLEAR;
                             BubSwitch = InsSwitch = SelSwitch = MerSwitch = QuiSwitch = 1;
@@ -502,7 +494,7 @@ int main() {
                             inputList = 0;
                             if((BubSwitch + InsSwitch + SelSwitch + MerSwitch + QuiSwitch + HeaSwitch + SheSwitch + CocSwitch + RadSwitch) >= 1){
                             printf("Vergleich der Sorts wird durchgefuehrt...\nJe nach Groesse des gewaehlten Arrays kann dies etwas dauern.");
-                                if(BubSwitch == 1){
+                                if(BubSwitch == 1){                          //Ausgewählte Sorts werden hintereinander ausgeführt
                                     for(uint32_t n = 0; n < arraysize; n++){
                                         sortedarray[n] = unsortedarray[n];
                                     }
@@ -612,20 +604,20 @@ int main() {
                                 }
                                 while(inputList != 4){
                                     CLEAR;
-                                    for(uint16_t i = 0; i < SortsCount; i++){
+                                    for(uint16_t i = 0; i < SortsCount; i++){   //Ergebnisse ausgewählter Sorts werden ab "Anfang" in das Array geschrieben
                                         printf("%u. %s    Zeit:%ums    Vergleiche: %llu\n", i+1, Sorts[i].name, Sorts[i].time, Sorts[i].comparisons);
                                     }
                                     printf("\n");
                                     ILIST();
                                     inputList = 0;
                                     scanf("%hu", &inputList);
-                                    getchar();                  //getchar verhindert, dass Programm sich aufhängt, wenn eine Zeichenkette (bzw. Buchstaben eingegeben werden)
-                                    if(inputList == 1){                          //Sortieren nach Alphabet mit Bubblesort
+                                    getchar();
+                                    if(inputList == 1){                                         //Sortieren nach Alphabet mit Bubblesort
                                         for(uint32_t n = SortsCount; n > 1; n--){
                                             for(uint32_t m = 0; m < n - 1; m++){
-                                                if(Sorts[m].name[0] >= Sorts[m+1].name[0]){
+                                                if(Sorts[m].name[0] >= Sorts[m+1].name[0]){     //Anfangsbuchstaben werden verglichen
                                                     if(Sorts[m].name[0] == Sorts[m+1].name[0]){
-                                                        if(Sorts[m].name[1] > Sorts[m+1].name[1]){
+                                                        if(Sorts[m].name[1] > Sorts[m+1].name[1]){  //zweite Buchstaben werden verglichen (wegen shell und selection)
                                                             swapstruct(&Sorts[m], &Sorts[m+1]);
                                                         }
                                                     }
@@ -636,7 +628,7 @@ int main() {
                                             }
                                         }
                                     }
-                                    if(inputList == 2){                                               //Sortieren nach Zeit mit Bubblesort
+                                    if(inputList == 2){                                         //Sortieren nach Zeit mit Bubblesort
                                         for(uint32_t n = SortsCount; n > 1; n--){
                                             for(uint32_t m = 0; m < n - 1; m++){
                                                 if(Sorts[m].time > Sorts[m+1].time){
@@ -645,7 +637,7 @@ int main() {
                                             }
                                         }
                                     }
-                                    if(inputList == 3){                                               //Sortieren nach Vergleichen mit Bubblesort
+                                    if(inputList == 3){                                         //Sortieren nach Vergleichen mit Bubblesort
                                         for(uint32_t n = SortsCount; n > 1; n--){
                                             for(uint32_t m = 0; m < n - 1; m++){
                                                 if(Sorts[m].comparisons > Sorts[m+1].comparisons){
@@ -697,7 +689,7 @@ int main() {
                                 ISORTS();
                                 inputArrSwi = 0;
                                 scanf("%hu", &inputArrSwi);
-                                getchar();              //getchar verhindert, dass Programm sich aufhängt, wenn eine Zeichenkette (bzw. Buchstaben eingegeben werden)
+                                getchar();
                                 if(inputArrSwi == 1){
                                     BubSwitch = 1;
                                 }
