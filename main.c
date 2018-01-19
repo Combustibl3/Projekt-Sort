@@ -98,7 +98,9 @@ int main() {
 
         IMAIN();
 
+        input = 0;                  //Falls ein ungültiges Zeichen eingegeben wird, soll die Variable nicht den vorherigen Wert haben und in ein Untermenue springen
         scanf("%hu", &input);
+        getchar();                  //getchar verhindert, dass Programm sich aufhängt, wenn eine Zeichenkette (bzw. Buchstaben eingegeben werden)
 
         /////////////////////////////////////////Array - Groesse festlegen
         if(input == 1){
@@ -123,7 +125,9 @@ int main() {
             while(inputRan != 3){
                 printf("Derzeitig min: %u   Derzeitiges max: %u", min, max);
                 IRANGE();
+                inputRan = 0;
                 scanf("%hu", &inputRan);
+                getchar();                      //getchar verhindert, dass Programm sich aufhängt, wenn eine Zeichenkette (bzw. Buchstaben eingegeben werden)
                 if(inputRan == 1){
                     CLEAR;
                     printf("Geben sie ihr gewuenschtes Minimum ein:");
@@ -216,7 +220,9 @@ int main() {
                 if(stocked == 1){
                     while(inputArr != 3){
                         IARRAY();
+                        inputArr = 0;
                         scanf("%hu", &inputArr);
+                        getchar();                  //getchar verhindert, dass Programm sich aufhängt, wenn eine Zeichenkette (bzw. Buchstaben eingegeben werden)
                         if(inputArr == 1){
                             CLEAR;
                             if(sorted == 1){
@@ -258,7 +264,9 @@ int main() {
                 if(stocked == 1){
                     while(inputSorts != 10){
                         ISORTS();
+                        inputSorts = 0;
                         scanf("%hu", &inputSorts);
+                        getchar();       //getchar verhindert, dass Programm sich aufhängt, wenn eine Zeichenkette (bzw. Buchstaben eingegeben werden)
 
                         if(inputSorts == 1){    //Bubblesort
                             CLEAR;
@@ -475,7 +483,9 @@ int main() {
                             printf("Radix | ");
                         }
                         ICOMP();
+                        inputComp = 0;
                         scanf("%hu", &inputComp);
+                        getchar();              //getchar verhindert, dass Programm sich aufhängt, wenn eine Zeichenkette (bzw. Buchstaben eingegeben werden)
                         if(inputComp == 1){
                             CLEAR;
                             BubSwitch = InsSwitch = SelSwitch = MerSwitch = QuiSwitch = 1;
@@ -607,8 +617,10 @@ int main() {
                                     }
                                     printf("\n");
                                     ILIST();
+                                    inputList = 0;
                                     scanf("%hu", &inputList);
-                                    if(inputList == 1){                                               //Sortieren nach Alphabet mit Bubblesort
+                                    getchar();                  //getchar verhindert, dass Programm sich aufhängt, wenn eine Zeichenkette (bzw. Buchstaben eingegeben werden)
+                                    if(inputList == 1){                          //Sortieren nach Alphabet mit Bubblesort
                                         for(uint32_t n = SortsCount; n > 1; n--){
                                             for(uint32_t m = 0; m < n - 1; m++){
                                                 if(Sorts[m].name[0] >= Sorts[m+1].name[0]){
@@ -683,7 +695,9 @@ int main() {
                                     printf("Radix | ");
                                 }
                                 ISORTS();
+                                inputArrSwi = 0;
                                 scanf("%hu", &inputArrSwi);
+                                getchar();              //getchar verhindert, dass Programm sich aufhängt, wenn eine Zeichenkette (bzw. Buchstaben eingegeben werden)
                                 if(inputArrSwi == 1){
                                     BubSwitch = 1;
                                 }
@@ -747,7 +761,9 @@ int main() {
                                     printf("Radix | ");
                                 }
                                 ISORTS();
+                                inputArrSwi = 0;
                                 scanf("%hu", &inputArrSwi);
+                                getchar();              //getchar verhindert, dass Programm sich aufhängt, wenn eine Zeichenkette (bzw. Buchstaben eingegeben werden)
                                 if(inputArrSwi == 1){
                                     BubSwitch = 0;
                                 }
