@@ -400,7 +400,7 @@ int main() {
                                 sortedarray[n] = unsortedarray[n];
                             }
                             GetSystemTime(&before);
-                            //comparisons = CocktailSort(sortedarray, arraysize);
+                            comparisons = CocktailSort(sortedarray, arraysize);
                             GetSystemTime(&later);
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                             sorted = 1;
@@ -418,7 +418,7 @@ int main() {
                                 sortedarray[n] = unsortedarray[n];
                             }
                             GetSystemTime(&before);
-                            //comparisons = RadixSort(sortedarray, arraysize);
+                            comparisons = RadixSort(sortedarray, arraysize);
                             GetSystemTime(&later);
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                             sorted = 1;
@@ -591,7 +591,7 @@ int main() {
                                         sortedarray[n] = unsortedarray[n];
                                     }
                                     GetSystemTime(&before);
-                                    //Sorts[SortsCount].comparisons = CocktailSort(sortedarray, arraysize);
+                                    Sorts[SortsCount].comparisons = CocktailSort(sortedarray, arraysize);
                                     GetSystemTime(&later);
                                     Sorts[SortsCount].time = (uint32_t) ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                                     strcpy(Sorts[SortsCount].name, "Cocktailsort");
@@ -603,7 +603,7 @@ int main() {
                                         sortedarray[n] = unsortedarray[n];
                                     }
                                     GetSystemTime(&before);
-                                    //Sorts[SortsCount].comparisons = RadixSort(sortedarray, arraysize);
+                                    Sorts[SortsCount].comparisons = RadixSort(sortedarray, arraysize);
                                     GetSystemTime(&later);
                                     Sorts[SortsCount].time = (uint32_t) ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                                     strcpy(Sorts[SortsCount].name, "Radixsort");

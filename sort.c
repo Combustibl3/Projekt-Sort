@@ -107,3 +107,74 @@ uint64_t MergeSort(uint32_t * sortarray, uint32_t arraysize){
     free(right);
     return comparisons;
 }
+
+
+uint64_t CocktailSort(uint32_t * sortarray, uint32_t arraysize){
+    comparisons = 0;
+    uint32_t left = 0, right = arraysize - 1, mov;
+    uint32_t j, temp;
+
+    do{
+        for(j = right; j >= left + 1; j--){
+            if(sortarray[j-1] > sortarray[j]){
+                    temp = sortarray[j-1];
+                    sortarray[j-1] = sortarray[j];
+                    sortarray[j] = temp;
+                    mov = j;
+            }
+            comparisons++;
+        }
+
+        left = mov;
+
+        for(j = left; j <= right - 1; j++)
+        {
+            if(sortarray[j] > sortarray[j+1])
+            {
+                temp = sortarray[j+1];
+                sortarray[j+1] = sortarray[j];
+                sortarray[j] = temp;
+                mov = j;
+            }
+            comparisons++;
+        }
+
+        right = mov;
+
+    } while(left < right);
+
+    return comparisons;
+}
+
+
+uint64_t RadixSort(uint32_t * sortarray, uint32_t arraysize){
+    int32_t i;
+    uint32_t helparray[arraysize];
+    int32_t digit = 1;
+    uint32_t largestnumber = 0;
+
+    for(i = 0; i < arraysize; i++){
+        if(sortarray[i] > largestnumber){
+            largestnumber = sortarray[i];
+        }
+    }
+
+    while((largestnumber / digit) > 0){
+        uint32_t bucket[10] = {0};
+        for(i = 0; i < arraysize; i++) {
+            bucket[(sortarray[i] / digit) % 10]++;
+        }
+        for(i = 1; i < 10; i++){
+            bucket[i] += bucket[i - 1];
+        }
+        for(i = arraysize - 1; i >= 0; i--){
+            helparray[--bucket[(sortarray[i] / digit) % 10]] = sortarray[i];
+        }
+        for(i = 0; i < arraysize; i++){
+            sortarray[i] = helparray[i];
+        }
+        digit *= 10;
+    }
+
+return 0;
+}
