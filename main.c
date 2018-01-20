@@ -159,23 +159,34 @@ int main() {
             uint32_t i = 1;
             uint32_t value;
             if(arraysize != 0){
-                printf("Geben sie die Elemente des Arrays ein (%u <= Groesse <= %u)\n", min, max);
+                printf("Geben sie die Elemente des Arrays ein (%u <= Groesse <= %u, %u um zu unterbrechen)\n", min, max, max+1);
                 while (i <= arraysize) {
                     printf("%u. Element: ", i);
+                    value = max + 2;        //verhindert, dass Fehler beim eingeben von buchstaben auftreten
                     scanf("%u", &value);
+                    getchar();
                     if(value >= min && value <= max) {                      //Nutzer gibt manuell alle Werte des Arrays ein
                         sortedarray[i - 1] = unsortedarray[i - 1] = value;  //Werte werden auf gültigkeit überprüft
                         i++;
                     }
+                    else if(value == max + 1){          //Mit max+1 kann die Eingabe unterbrochen werden
+                    i = arraysize + 1;
+                    }
                     else{
-                        CLEAR;
                         printf("--Beachten sie die Einschraenkung der Groesse!\n");
                     }
                 }
-                stocked = 1;
+                if(value != max + 1){
+                    stocked = 1;
+                }
                 sorted = 0;
                 CLEAR;
-                printf("--Sie haben alle Elemente eingegeben.");
+                if(value != max + 1){
+                    printf("--Sie haben alle Elemente eingegeben.");
+                }
+                else{
+                    printf("--Sie haben die manuelle Eingabe unterbrochen.");
+                }
             }
             else{
                 CLEAR;
@@ -193,10 +204,11 @@ int main() {
                 for (uint32_t j = 0; j < arraysize; j++) {
                     random = (uint32_t) rand();
                     sortedarray[j] = unsortedarray[j] = (random % (max - min + 1)) + min;   //Zufallszahlen werden im Bereich des festgelegten Zahlenbereichs generiert
-                    printf("%u. Element: %u\n", j+1, sortedarray[j]);
+                    //printf("%u. Element: %u\n", j+1, sortedarray[j]);
                 }
                 stocked = 1;
                 sorted = 0;
+                printf("--Das Array wurde mit Zufallszahlen gefuellt");
             }
             else{
                 printf("--Legen sie vorerst die Array - Groesse fest!");
@@ -262,6 +274,7 @@ int main() {
 
                         if(inputSorts == 1){    //Bubblesort
                             CLEAR;
+                            printf("Array wird mit Bubblesort sortiert... (%u. Elemente)\nJe nach Groesse des gewaehlten Arrays kann dies etwas dauern.", arraysize);
                             for(uint32_t n = 0; n < arraysize; n++){    //Werte von "unsortedarray" werden auf "sortarray" übertragen
                                 sortedarray[n] = unsortedarray[n];
                             }
@@ -270,16 +283,18 @@ int main() {
                             GetSystemTime(&later);          //Zeit nach Ende des Sorts wird gespeichert und Differenz wird gebildet
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                             sorted = 1;
-                            for(uint32_t j = 0; j < arraysize; j++){            //Ausgaben werden im Laufe der weiteren Entwicklung entfernt!
+                            CLEAR;
+                            /*for(uint32_t j = 0; j < arraysize; j++){
                                 printf("%u. %u\n", j+1, sortedarray[j]);
-                            }
-                            printf("\nArray durch Bubblesort sortiert.\n");
+                            }*/
+                            printf("Array durch Bubblesort sortiert.\n");
                             printf("Benoetigte Vergleiche:  %llu\n", comparisons);     //Benötigte Vergleichtsschritte werden ausgegeben
                             printf("Benoetigte Zeit:        %lldms\n", diffms);        //Benötigte Zeit wird ausgegeben
                         }
 
                         else if(inputSorts == 2){    //Insertionsort
                             CLEAR;
+                            printf("Array wird mit Insertionsort sortiert... (%u. Elemente)\nJe nach Groesse des gewaehlten Arrays kann dies etwas dauern.", arraysize);
                             for(uint32_t n = 0; n < arraysize; n++){
                                 sortedarray[n] = unsortedarray[n];
                             }
@@ -288,16 +303,18 @@ int main() {
                             GetSystemTime(&later);
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                             sorted = 1;
-                            for(uint32_t j = 0; j < arraysize; j++){
+                            CLEAR;
+                            /*for(uint32_t j = 0; j < arraysize; j++){
                                 printf("%u. %u\n", j+1, sortedarray[j]);
-                            }
-                            printf("\nArray durch Insertionsort sortiert.\n");
+                            }*/
+                            printf("Array durch Insertionsort sortiert.\n");
                             printf("Benoetigte Vergleiche:  %llu\n", comparisons);
                             printf("Benoetigte Zeit:        %lldms\n", diffms);
                         }
 
                         else if(inputSorts == 3){    //Selectionsort
                             CLEAR;
+                            printf("Array wird mit Selectionsort sortiert... (%u. Elemente)\nJe nach Groesse des gewaehlten Arrays kann dies etwas dauern.", arraysize);
                             for(uint32_t n = 0; n < arraysize; n++){
                                 sortedarray[n] = unsortedarray[n];
                             }
@@ -306,16 +323,18 @@ int main() {
                             GetSystemTime(&later);
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                             sorted = 1;
-                            for(uint32_t j = 0; j < arraysize; j++){
+                            CLEAR;
+                            /*for(uint32_t j = 0; j < arraysize; j++){
                                 printf("%u. %u\n", j+1, sortedarray[j]);
-                            }
-                            printf("\nArray durch Selectionsort sortiert.\n");
+                            }*/
+                            printf("Array durch Selectionsort sortiert.\n");
                             printf("Benoetigte Vergleiche:  %llu\n", comparisons);
                             printf("Benoetigte Zeit:        %lldms\n", diffms);
                         }
 
                         else if(inputSorts == 4){    //Mergesort
                             CLEAR;
+                            printf("Array wird mit Mergesort sortiert... (%u. Elemente)\nJe nach Groesse des gewaehlten Arrays kann dies etwas dauern.", arraysize);
                             for(uint32_t n = 0; n < arraysize; n++){
                                 sortedarray[n] = unsortedarray[n];
                             }
@@ -324,16 +343,18 @@ int main() {
                             GetSystemTime(&later);
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                             sorted = 1;
-                            for(uint32_t j = 0; j < arraysize; j++){
+                            CLEAR;
+                            /*for(uint32_t j = 0; j < arraysize; j++){
                                 printf("%u. %u\n", j+1, sortedarray[j]);
-                            }
-                            printf("\nArray durch Mergesort sortiert.\n");
+                            }*/
+                            printf("Array durch Mergesort sortiert.\n");
                             printf("Benoetigte Vergleiche:  %llu\n", comparisons);
                             printf("Benoetigte Zeit:        %lldms\n", diffms);
                         }
 
                         else if(inputSorts == 5){    //Quicksort
                             CLEAR;
+                            printf("Array wird mit Quicksort sortiert... (%u. Elemente)\nJe nach Groesse des gewaehlten Arrays kann dies etwas dauern.", arraysize);
                             for(uint32_t n = 0; n < arraysize; n++){
                                 sortedarray[n] = unsortedarray[n];
                             }
@@ -342,16 +363,18 @@ int main() {
                             GetSystemTime(&later);
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                             sorted = 1;
-                            for(uint32_t j = 0; j < arraysize; j++){
+                            CLEAR;
+                            for(uint32_t j = 0; j < arraysize; j++){            //////////NOCH NICHT AUSKOMMENTIERT
                                 printf("%u. %u\n", j+1, sortedarray[j]);
                             }
-                            printf("\nArray durch Quicksort sortiert.\n");
+                            printf("Array durch Quicksort sortiert.\n");
                             printf("Benoetigte Vergleiche:  %llu\n", comparisons);
                             printf("Benoetigte Zeit:        %lldms\n", diffms);
                         }
 
                         else if(inputSorts == 6){    //Heapsort
                             CLEAR;
+                            printf("Array wird mit Heapsort sortiert... (%u. Elemente)\nJe nach Groesse des gewaehlten Arrays kann dies etwas dauern.", arraysize);
                             for(uint32_t n = 0; n < arraysize; n++){
                                 sortedarray[n] = unsortedarray[n];
                             }
@@ -360,16 +383,18 @@ int main() {
                             GetSystemTime(&later);
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                             sorted = 1;
-                            for(uint32_t j = 0; j < arraysize; j++){
+                            CLEAR;
+                            for(uint32_t j = 0; j < arraysize; j++){            //////////NOCH NICHT AUSKOMMENTIERT
                                 printf("%u. %u\n", j+1, sortedarray[j]);
                             }
-                            printf("\nArray durch Heapsort sortiert.\n");
+                            printf("Array durch Heapsort sortiert.\n");
                             printf("Benoetigte Vergleiche:  %llu\n", comparisons);
                             printf("Benoetigte Zeit:        %lldms\n", diffms);
                         }
 
                         else if(inputSorts == 7){    //Shellsort
                             CLEAR;
+                            printf("Array wird mit Shellsort sortiert... (%u. Elemente)\nJe nach Groesse des gewaehlten Arrays kann dies etwas dauern.", arraysize);
                             for(uint32_t n = 0; n < arraysize; n++){
                                 sortedarray[n] = unsortedarray[n];
                             }
@@ -378,16 +403,18 @@ int main() {
                             GetSystemTime(&later);
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                             sorted = 1;
-                            for(uint32_t j = 0; j < arraysize; j++){
+                            CLEAR;
+                            for(uint32_t j = 0; j < arraysize; j++){            //////////NOCH NICHT AUSKOMMENTIERT
                                 printf("%u. %u\n", j+1, sortedarray[j]);
                             }
-                            printf("\nArray durch Shellsort sortiert.\n");
+                            printf("Array durch Shellsort sortiert.\n");
                             printf("Benoetigte Vergleiche:  %llu\n", comparisons);
                             printf("Benoetigte Zeit:        %lldms\n", diffms);
                         }
 
                         else if(inputSorts == 8){    //Cocktailsort
                             CLEAR;
+                            printf("Array wird mit Cocktailsort sortiert... (%u. Elemente)\nJe nach Groesse des gewaehlten Arrays kann dies etwas dauern.", arraysize);
                             for(uint32_t n = 0; n < arraysize; n++){
                                 sortedarray[n] = unsortedarray[n];
                             }
@@ -396,16 +423,18 @@ int main() {
                             GetSystemTime(&later);
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                             sorted = 1;
-                            for(uint32_t j = 0; j < arraysize; j++){
+                            CLEAR;
+                            /*for(uint32_t j = 0; j < arraysize; j++){
                                 printf("%u. %u\n", j+1, sortedarray[j]);
-                            }
-                            printf("\nArray durch Cocktailsort sortiert.\n");
+                            }*/
+                            printf("Array durch Cocktailsort sortiert.\n");
                             printf("Benoetigte Vergleiche:  %llu\n", comparisons);
                             printf("Benoetigte Zeit:        %lldms\n", diffms);
                         }
 
                         else if(inputSorts == 9){    //Radixsort
                             CLEAR;
+                            printf("Array wird mit Radixsort sortiert... (%u. Elemente)\nJe nach Groesse des gewaehlten Arrays kann dies etwas dauern.", arraysize);
                             for(uint32_t n = 0; n < arraysize; n++){
                                 sortedarray[n] = unsortedarray[n];
                             }
@@ -414,10 +443,11 @@ int main() {
                             GetSystemTime(&later);
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                             sorted = 1;
-                            for(uint32_t j = 0; j < arraysize; j++){
+                            CLEAR;
+                            /*for(uint32_t j = 0; j < arraysize; j++){
                                 printf("%u. %u\n", j+1, sortedarray[j]);
-                            }
-                            printf("\nArray durch Radixsort sortiert.\n");
+                            }*/
+                            printf("Array durch Radixsort sortiert.\n");
                             printf("Benoetigte Vergleiche:  %llu\n", comparisons);
                             printf("Benoetigte Zeit:        %lldms\n", diffms);
                         }
