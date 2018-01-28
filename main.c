@@ -385,9 +385,9 @@ int main() {
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                             sorted = 1;
                             CLEAR;
-                            for(uint32_t j = 0; j < arraysize; j++){            //////////NOCH NICHT AUSKOMMENTIERT
+                            /*for(uint32_t j = 0; j < arraysize; j++){
                                 printf("%u. %u\n", j+1, sortedarray[j]);
-                            }
+                            }*/
                             printf("Array durch Quicksort sortiert.\n");
                             printf("Benoetigte Vergleiche:  %llu\n", comparisons);
                             printf("Benoetigte Zeit:        %lldms\n", diffms);
@@ -405,9 +405,9 @@ int main() {
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                             sorted = 1;
                             CLEAR;
-                            for(uint32_t j = 0; j < arraysize; j++){            //////////NOCH NICHT AUSKOMMENTIERT
+                            /*for(uint32_t j = 0; j < arraysize; j++){
                                 printf("%u. %u\n", j+1, sortedarray[j]);
-                            }
+                            }*/
                             printf("Array durch Heapsort sortiert.\n");
                             printf("Benoetigte Vergleiche:  %llu\n", comparisons);
                             printf("Benoetigte Zeit:        %lldms\n", diffms);
@@ -425,9 +425,9 @@ int main() {
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                             sorted = 1;
                             CLEAR;
-                            for(uint32_t j = 0; j < arraysize; j++){            //////////NOCH NICHT AUSKOMMENTIERT
+                            /*for(uint32_t j = 0; j < arraysize; j++){
                                 printf("%u. %u\n", j+1, sortedarray[j]);
-                            }
+                            }*/
                             printf("Array durch Shellsort sortiert.\n");
                             printf("Benoetigte Vergleiche:  %llu\n", comparisons);
                             printf("Benoetigte Zeit:        %lldms\n", diffms);
