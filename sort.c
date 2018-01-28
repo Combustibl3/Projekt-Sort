@@ -178,3 +178,105 @@ uint64_t RadixSort(uint32_t * sortarray, uint32_t arraysize){
 
 return 0;
 }
+
+
+uint64_t ShellSort(uint32_t* sortarray, uint32_t arraysize){
+	uint64_t anzahlVergleiche=0;
+	uint32_t j, temp, n;
+	//Spannweite
+	n = 6;
+	//Schleife zum verringern der Spannweiter
+	while(n > 0){
+		//Schleife zum Weiterschieben der beiden Vergleichsobjekte
+		for (uint32_t i = n; i < arraysize; i++){
+			temp = sortarray[i];
+			//Wenn eine Zahl getauscht werden muss (vorheriges groesser als hinteres), dann
+			//wird die kleinere Zahl rückwirkend mit der Spannweite n zur passenden Stelle verschoben
+			for(j = i; j >= n && sortarray[j-n] > temp; j -= n){
+				anzahlVergleiche++;
+				//an der hinteren Stelle wird die vordere Zahl gespeichert
+				sortarray[j] = sortarray[j-n];
+			}
+		//Wenn passende Stelle für temp (kleinere Zahl) gefunden -> speichern
+		sortarray[j] = temp;
+		}
+		//Spannweite verkleinern
+		n--;
+	}
+	return anzahlVergleiche;
+}
+
+
+uint64_t QuickSort(uint32_t* first, uint32_t* last){
+	uint64_t anzahlVergleiche=0;
+	uint32_t* firstTemp = first;
+	uint32_t* lastTemp = last;
+	uint32_t temp;
+	//Pivotelement: In der Mitte
+	uint32_t pivot = *(first + (last - first >> 1));
+	do{
+		//suchen nach groessere Zahlen als das Pivotelement auf der linken Seite
+		while(*firstTemp < pivot){
+			firstTemp++;
+		}
+		//suchen nach kleineren Zahlen als das Pivotelement auf der rechten Seite
+		while(*lastTemp > pivot){
+			lastTemp--;
+		}
+		anzahlVergleiche++;
+		//Wenn sich die zeiger noch nicht gekreuzt haben -> tauschen und weiterschalten
+		if(firstTemp <= lastTemp){
+			temp = *firstTemp;
+			*firstTemp = *lastTemp;
+			*lastTemp = temp;
+			firstTemp++;
+			lastTemp --;
+		}
+		//Abbruch wenn Zeiger sich "kreuzen"
+	}while(firstTemp <= lastTemp);
+	//wenn es kleinere Zahlen als das Pivotelement gibt: Teilen und Quicksort neu aufrufen
+	if(first < lastTemp){
+		anzahlVergleiche += QuickSort(first, lastTemp);
+	}
+	anzahlVergleiche++;
+	//wenn es groessere Zahlen als das Pivotelement gibt: Teilen und Quicksort neu aufrufen
+	if(last > firstTemp){
+		anzahlVergleiche += QuickSort(firstTemp, last);
+	}
+	return anzahlVergleiche;
+}
+
+uint64_t HeapSort(uint32_t* sortarray, uint32_t arraysize){
+	uint64_t anzahlVergleiche=0;
+	//Heapsort: Aufteilen in Binärbaum: Zu einem Kind am Index i ist (i+1)/2-1 der Vater
+	//Ziel: Groesstes Element in die Spitze verschieben
+	uint32_t temp;
+	//Schleife von unten nach oben tauschen (Vater muss groesser sein als Kind)
+	for(uint32_t i = arraysize; i > 1; i--){
+		anzahlVergleiche ++;
+		//Tausch wenn Vater nicht groesser ist
+		if(*(sortarray+i/2-1) < *(sortarray+i-1)){
+			temp = *(sortarray + i-1);
+			*(sortarray + i-1) = *(sortarray + i/2-1);
+			*(sortarray + i/2-1) = temp;
+		}
+	}
+	//Schleife bis Baum komplett sortiert
+	for(uint32_t j = arraysize; j > 1; j--){
+		//Schleife von oben nach unten tauschen
+		for(uint32_t i = 2; i <= j; i++){
+			anzahlVergleiche ++;
+			//Tausch wenn Vater nicht groesser ist
+			if(*(sortarray+i/2-1) < *(sortarray+i-1)){
+				temp = *(sortarray + i-1);
+				*(sortarray + i-1) = *(sortarray + i/2-1);
+				*(sortarray + i/2-1) = temp;
+			}
+		}
+		//Tausch: Groesstes Element (in der Spitze) mit letztem Element des Baumes tauschen
+		temp = *(sortarray+j-1);
+		*(sortarray + j-1) = *sortarray;
+		*sortarray = temp;
+	}
+	return anzahlVergleiche;
+}

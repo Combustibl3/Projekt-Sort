@@ -16,7 +16,7 @@ uint64_t SelectionSort(uint32_t * sortarray, uint32_t arraysize);
 
 uint64_t InsertionSort(uint32_t * sortarray, uint32_t arraysize);
 
-uint64_t QuickSort(uint32_t * sortarray, uint32_t arraysize);
+uint64_t QuickSort(uint32_t * first, uint32_t * last);
 
 uint64_t ShellSort(uint32_t * sortarray, uint32_t arraysize);
 

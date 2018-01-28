@@ -13,7 +13,7 @@
 #define IARRAY UserinterfaceArrayOut
 #define ICOMP UserinterfaceComparison
 #define ILIST UserinterfaceList
-#define CLEAR system("cls")         //system("cls") dient dazu das normale Windows Terminal zu clearen (Bei Unix Systemen oder anderen Terminals funktioniert
+#define CLEAR system("cls")         //system("cls") dient dazu, das normale Windows Terminal zu clearen (Bei Unix Systemen oder anderen Terminals funktioniert
                                     //dies eventuell nicht oder nicht einwandfrei
 struct infos{
 char name[50];
@@ -99,12 +99,19 @@ int main() {
             CLEAR;
             printf("Geben sie die Anzahl der Elemente an, die sortiert werden sollen.\n");
             scanf("%u", &arraysize);
-            sortedarray = (uint32_t*) malloc(arraysize * sizeof(uint32_t));     //es wird Speicher für zwei Arrays reserviert
-            unsortedarray = (uint32_t*) malloc(arraysize * sizeof(uint32_t));   //"unsortedarray" wird nicht an Funktionen übergeben, "unsortedarray" dient dazu die ursprünglichen Werte zu speichern und
-            stocked = 0;                                                        //diese "sortedarray" vor einem Sort zu übergeben
-            sorted = 0;
-            CLEAR;
-            printf("--Die Anzahl der Elemente betraegt nun: %u", arraysize);
+            if(arraysize <= 500000){
+                sortedarray = (uint32_t*) malloc(arraysize * sizeof(uint32_t));     //es wird Speicher für zwei Arrays reserviert
+                unsortedarray = (uint32_t*) malloc(arraysize * sizeof(uint32_t));   //"unsortedarray" wird nicht an Funktionen übergeben, "unsortedarray" dient dazu die ursprünglichen Werte zu speichern und
+                stocked = 0;                                                        //diese "sortedarray" vor einem Sort zu übergeben
+                sorted = 0;
+                CLEAR;
+                printf("--Die Anzahl der Elemente betraegt nun: %u", arraysize);
+            }
+            else{
+                CLEAR;
+                printf("--Array - Groessen > 500.000 sind nicht erlaubt!");
+                arraysize = 0;
+            }
         }
         ///////////////////////////////////////////////////////////
 
@@ -115,7 +122,7 @@ int main() {
             CLEAR;
             inputRan = 0;
             while(inputRan != 3){
-                printf("Derzeitig min: %u   Derzeitiges max: %u", min, max);
+                printf("Derzeitiges min: %u   Derzeitiges max: %u", min, max);
                 IRANGE();
                 inputRan = 0;
                 scanf("%hu", &inputRan);
@@ -124,26 +131,38 @@ int main() {
                     CLEAR;
                     printf("Geben sie ihr gewuenschtes Minimum ein:");
                     scanf("%u", &mintest);
-                    if(mintest <= max){     //Minimum muss kleiner gleich Maximum gewählt werden
-                        min = mintest;
-                        CLEAR;
+                    if(mintest < 4000000000){
+                        if(mintest <= max){     //Minimum muss kleiner gleich Maximum gewählt werden
+                            min = mintest;
+                            CLEAR;
+                        }
+                        else{
+                            CLEAR;
+                            printf("--Das Minimum muss kleiner als, oder gleich dem Maximum gewaehlt werden!\n");
+                        }
                     }
                     else{
                         CLEAR;
-                        printf("--Das Minimum muss kleiner als, oder gleich dem Maximum gewaehlt werden!\n");
+                        printf("--ungueltige Eingabe!\n");
                     }
                 }
                 else if(inputRan == 2){
                     CLEAR;
                     printf("Geben sie ihr gewuenschtes Maximum ein:");
                     scanf("%u", &maxtest);
-                    if(maxtest >= min){     //Maximum muss größer gleich Minimum gewählt werden
-                        max = maxtest;
-                        CLEAR;
+                    if(maxtest < 4000000000){
+                        if(maxtest >= min){     //Maximum muss größer gleich Minimum gewählt werden
+                            max = maxtest;
+                            CLEAR;
+                        }
+                        else{
+                            CLEAR;
+                            printf("--Das Maximum muss groesser als, oder gleich dem Minimum gewaehlt werden!\n");
+                        }
                     }
                     else{
                         CLEAR;
-                        printf("--Das Maximum muss groesser als, oder gleich dem Minimum gewaehlt werden!\n");
+                        printf("--ungueltige Eingabe!\n");
                     }
                 }
                 else{
@@ -162,7 +181,7 @@ int main() {
                 printf("Geben sie die Elemente des Arrays ein (%u <= Groesse <= %u, %u um zu unterbrechen)\n", min, max, max+1);
                 while (i <= arraysize) {
                     printf("%u. Element: ", i);
-                    value = max + 2;        //verhindert, dass Fehler beim eingeben von buchstaben auftreten
+                    value = max + 2;        //verhindert, dass Fehler beim Eingeben von Buchstaben auftreten
                     scanf("%u", &value);
                     getchar();
                     if(value >= min && value <= max) {                      //Nutzer gibt manuell alle Werte des Arrays ein
@@ -173,7 +192,9 @@ int main() {
                     i = arraysize + 1;
                     }
                     else{
+                        CLEAR;
                         printf("--Beachten sie die Einschraenkung der Groesse!\n");
+                        printf("Geben sie die Elemente des Arrays ein (%u <= Groesse <= %u, %u um zu unterbrechen)\n", min, max, max+1);
                     }
                 }
                 if(value != max + 1){
@@ -359,7 +380,7 @@ int main() {
                                 sortedarray[n] = unsortedarray[n];
                             }
                             GetSystemTime(&before);
-                            //comparisons = QuickSort(sortedarray, arraysize);
+                            comparisons = QuickSort(sortedarray, &sortedarray[arraysize - 1]);
                             GetSystemTime(&later);
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                             sorted = 1;
@@ -379,7 +400,7 @@ int main() {
                                 sortedarray[n] = unsortedarray[n];
                             }
                             GetSystemTime(&before);
-                            //comparisons = HeapSort(sortedarray, arraysize);
+                            comparisons = HeapSort(sortedarray, arraysize);
                             GetSystemTime(&later);
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                             sorted = 1;
@@ -399,7 +420,7 @@ int main() {
                                 sortedarray[n] = unsortedarray[n];
                             }
                             GetSystemTime(&before);
-                            //comparisons = ShellSort(sortedarray, arraysize);
+                            comparisons = ShellSort(sortedarray, arraysize);
                             GetSystemTime(&later);
                             diffms = ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                             sorted = 1;
@@ -577,7 +598,7 @@ int main() {
                                         sortedarray[n] = unsortedarray[n];
                                     }
                                     GetSystemTime(&before);
-                                    //Sorts[SortsCount].comparisons = QuickSort(sortedarray, arraysize);
+                                    Sorts[SortsCount].comparisons = QuickSort(sortedarray, &sortedarray[arraysize - 1]);
                                     GetSystemTime(&later);
                                     Sorts[SortsCount].time = (uint32_t) ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                                     strcpy(Sorts[SortsCount].name, "Quicksort");
@@ -589,7 +610,7 @@ int main() {
                                         sortedarray[n] = unsortedarray[n];
                                     }
                                     GetSystemTime(&before);
-                                    //Sorts[SortsCount].comparisons = HeapSort(sortedarray, arraysize);
+                                    Sorts[SortsCount].comparisons = HeapSort(sortedarray, arraysize);
                                     GetSystemTime(&later);
                                     Sorts[SortsCount].time = (uint32_t) ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                                     strcpy(Sorts[SortsCount].name, "Heapsort");
@@ -601,7 +622,7 @@ int main() {
                                         sortedarray[n] = unsortedarray[n];
                                     }
                                     GetSystemTime(&before);
-                                    //Sorts[SortsCount].comparisons = ShellSort(sortedarray, arraysize);
+                                    Sorts[SortsCount].comparisons = ShellSort(sortedarray, arraysize);
                                     GetSystemTime(&later);
                                     Sorts[SortsCount].time = (uint32_t) ((later.wHour - before.wHour)*3600000) + ((later.wMinute - before.wMinute)*60000) +((later.wSecond - before.wSecond)*1000) +((later.wMilliseconds - before.wMilliseconds));
                                     strcpy(Sorts[SortsCount].name, "Shellsort");
@@ -842,7 +863,7 @@ int main() {
         ////////////////////////////////////////////////
         else{
             CLEAR;
-            printf("--Beachten sie die Eingabemoeglichkeiten!");
+            printf("--Beachten Sie die Eingabemoeglichkeiten!");
         }
         ////////////////////////////////////////////////////
     }
