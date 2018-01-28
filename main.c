@@ -97,7 +97,7 @@ int main() {
         /////////////////////////////////////////Array - Groesse festlegen
         if(input == 1){
             CLEAR;
-            printf("Geben sie die Anzahl der Elemente an, die sortiert werden sollen.\n");
+            printf("Geben Sie die Anzahl der Elemente an, die sortiert werden sollen.\n");
             scanf("%u", &arraysize);
             if(arraysize <= 500000){
                 sortedarray = (uint32_t*) malloc(arraysize * sizeof(uint32_t));     //es wird Speicher für zwei Arrays reserviert
@@ -129,7 +129,7 @@ int main() {
                 getchar();
                 if(inputRan == 1){
                     CLEAR;
-                    printf("Geben sie ihr gewuenschtes Minimum ein:");
+                    printf("Geben Sie ihr gewuenschtes Minimum ein:");
                     scanf("%u", &mintest);
                     if(mintest < 4000000000){
                         if(mintest <= max){     //Minimum muss kleiner gleich Maximum gewählt werden
@@ -148,7 +148,7 @@ int main() {
                 }
                 else if(inputRan == 2){
                     CLEAR;
-                    printf("Geben sie ihr gewuenschtes Maximum ein:");
+                    printf("Geben Sie ihr gewuenschtes Maximum ein:");
                     scanf("%u", &maxtest);
                     if(maxtest < 4000000000){
                         if(maxtest >= min){     //Maximum muss größer gleich Minimum gewählt werden
@@ -178,7 +178,7 @@ int main() {
             uint32_t i = 1;
             uint32_t value;
             if(arraysize != 0){
-                printf("Geben sie die Elemente des Arrays ein (%u <= Groesse <= %u, %u um zu unterbrechen)\n", min, max, max+1);
+                printf("Geben Sie die Elemente des Arrays ein (%u <= Groesse <= %u, %u um zu unterbrechen)\n", min, max, max+1);
                 while (i <= arraysize) {
                     printf("%u. Element: ", i);
                     value = max + 2;        //verhindert, dass Fehler beim Eingeben von Buchstaben auftreten
@@ -193,8 +193,8 @@ int main() {
                     }
                     else{
                         CLEAR;
-                        printf("--Beachten sie die Einschraenkung der Groesse!\n");
-                        printf("Geben sie die Elemente des Arrays ein (%u <= Groesse <= %u, %u um zu unterbrechen)\n", min, max, max+1);
+                        printf("--Beachten Sie die Einschraenkung der Groesse!\n");
+                        printf("Geben Sie die Elemente des Arrays ein (%u <= Groesse <= %u, %u um zu unterbrechen)\n", min, max, max+1);
                     }
                 }
                 if(value != max + 1){
@@ -211,7 +211,7 @@ int main() {
             }
             else{
                 CLEAR;
-                printf("--Legen sie vorerst die Array - Groesse fest!");
+                printf("--Legen Sie vorerst die Array - Groesse fest!");
             }
         }
         ///////////////////////////////////////////////////////////
@@ -232,7 +232,7 @@ int main() {
                 printf("--Das Array wurde mit Zufallszahlen gefuellt");
             }
             else{
-                printf("--Legen sie vorerst die Array - Groesse fest!");
+                printf("--Legen Sie vorerst die Array - Groesse fest!");
             }
         }
         ///////////////////////////////////////////////////////////
@@ -276,7 +276,7 @@ int main() {
                 }
             }
             else{
-                printf("--Legen sie erst die Array Groesse fest und setzen sie die Werte!");
+                printf("--Legen Sie erst die Array Groesse fest und setzen Sie die Werte!");
             }
         }
         ///////////////////////////////////////////////////////////
@@ -483,7 +483,7 @@ int main() {
                 }
             }
             else{
-                printf("--Legen sie erst die Array Groesse fest und setzen sie die Werte!");
+                printf("--Legen Sie erst die Array Groesse fest und setzen Sie die Werte!");
             }
 
         }
@@ -709,7 +709,7 @@ int main() {
                             inputArrSwi = 0;
                             while(inputArrSwi != 10){
                                 CLEAR;
-                                printf("Fuegen sie die gewuenschten Sorts zu dem Vergleich hinzu.\nDerzeit aktivierte Sorts: ");
+                                printf("Fuegen Sie die gewuenschten Sorts zu dem Vergleich hinzu.\nDerzeit aktivierte Sorts: ");
                                 if(BubSwitch == 1){
                                     printf("Bubble | ");
                                 }
@@ -775,7 +775,7 @@ int main() {
                             inputArrSwi = 0;
                             while(inputArrSwi != 10){
                                 CLEAR;
-                                printf("Entfernen sie die gewuenschten Sorts aus dem Vergleich.\nDerzeit aktivierte Sorts: ");
+                                printf("Entfernen Sie die gewuenschten Sorts aus dem Vergleich.\nDerzeit aktivierte Sorts: ");
                                 if(BubSwitch == 1){
                                     printf("Bubble | ");
                                 }
@@ -848,7 +848,7 @@ int main() {
                 }
             }
             else{
-                printf("--Legen sie erst die Array Groesse fest und setzen sie die Werte!");
+                printf("--Legen Sie erst die Array Groesse fest und setzen Sie die Werte!");
             }
         }
         ///////////////////////////////////////////////
